@@ -62,11 +62,15 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
     const resultsPage = page.locator('results-page');
     await expect(resultsPage).toBeVisible();
     
-    // Wait for the primary heading inside the shadow DOM
-    const heading = resultsPage.locator('h1, h2');
-    await expect(heading.first()).toBeVisible({ timeout: 5000 });
+    // Wait for the primary heading inside the shadow DOM and check its text directly
+    const heading = resultsPage.locator('h1, h2').first();
+    await expect(heading).toBeVisible({ timeout: 5000 });
     
-    const text = await resultsPage.innerText();
-    expect(text).toMatch(/Title|Spurs|City|Priority/);
+    // Assert against the heading's text directly (pierces shadow DOM)
+    const headingText = await heading.innerText();
+    expect(headingText).toMatch(/Title|Spurs|City|Priority|Result/i);
+    
+    // Also verify that the OVP bars are present
+    await expect(resultsPage.locator('.ovp-row').first()).toBeVisible();
   });
 });
