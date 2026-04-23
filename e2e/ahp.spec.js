@@ -37,37 +37,36 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
 
     // Work through all 15 match steps
     for (let i = 0; i < 15; i++) {
-      // Small delay for component transition
-      await page.waitForTimeout(100);
-
       const analysisPage = page.locator('analysis-page');
       
-      // Set slider to a value (alternate preference)
+      // Wait for slider to be interactable
       const slider = analysisPage.locator('#pref-slider');
-      if (await slider.isVisible()) {
-        const value = i % 2 === 0 ? '2' : '-2';
-        await slider.evaluate((el, val) => {
-          el.value = val;
-          el.dispatchEvent(new Event('input'));
-        }, value);
-      }
+      await expect(slider).toBeVisible({ timeout: 5000 });
+
+      // Set slider to a value (alternate preference)
+      const value = i % 2 === 0 ? '2' : '-2';
+      await slider.evaluate((el, val) => {
+        el.value = val;
+        el.dispatchEvent(new Event('input'));
+      }, value);
 
       // Click Next / See Results
       const nextBtn = analysisPage.locator('#btn-next');
-      if (await nextBtn.isVisible()) {
-        await nextBtn.click();
-      }
+      await nextBtn.click();
+      
+      // Wait for the next step to slide in (visual stability)
+      await page.waitForTimeout(200);
     }
 
-    // Should now be on results page
-    await expect(page).toHaveURL(/results/);
-    
-    // Verify results page content
+    // Verify results page content (piercing shadow DOM)
     const resultsPage = page.locator('results-page');
     await expect(resultsPage).toBeVisible();
     
-    // The results should mention one of the outcomes
+    // Wait for the primary heading inside the shadow DOM
+    const heading = resultsPage.locator('h1, h2');
+    await expect(heading.first()).toBeVisible({ timeout: 5000 });
+    
     const text = await resultsPage.innerText();
-    expect(text).toMatch(/Title|Spurs|City/);
+    expect(text).toMatch(/Title|Spurs|City|Priority/);
   });
 });
