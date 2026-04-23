@@ -1,0 +1,22 @@
+<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" aria-label="Tottenham Hotspur FC">
+  <defs>
+    <radialGradient id="spurs-grad" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#1d3278"/>
+      <stop offset="100%" stop-color="#0a1840"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="38" fill="url(#spurs-grad)" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+  <!-- Cockerel body -->
+  <ellipse cx="40" cy="50" rx="14" ry="10" fill="#ffffff"/>
+  <!-- Cockerel head -->
+  <circle cx="54" cy="30" r="9" fill="#ffffff"/>
+  <!-- Beak -->
+  <polygon points="63,27 71,30 63,33" fill="#f5c518"/>
+  <!-- Eye -->
+  <circle cx="57" cy="28" r="1.8" fill="#132257"/>
+  <!-- Tail feathers -->
+  <path d="M27,46 Q19,36 22,28 Q26,38 30,42" fill="#ffffff"/>
+  <!-- Legs -->
+  <line x1="37" y1="60" x2="33" y2="70" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+  <line x1="43" y1="60" x2="47" y2="70" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+</svg>

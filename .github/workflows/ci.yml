@@ -1,0 +1,31 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.58.2-noble
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v25
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Unit Tests
+        run: npm test
+
+      - name: E2E Tests
+        run: npx playwright test

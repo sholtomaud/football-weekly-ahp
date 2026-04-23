@@ -1,0 +1,197 @@
+:host {
+  display: block;
+}
+
+.about {
+  background: #080812;
+  min-height: calc(100vh - 60px);
+}
+
+.about-inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ---- Header ----------------------------------------------- */
+.about-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.about-badge {
+  display: inline-block;
+  background: rgba(239, 1, 7, 0.1);
+  border: 1px solid rgba(239, 1, 7, 0.25);
+  color: #ef0107;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 16px;
+}
+
+.about-title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.about-sub {
+  color: #7070a0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---- Section cards ---------------------------------------- */
+.section-card {
+  background: #0f0f20;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.section-card p {
+  font-size: 0.9rem;
+  color: #8a8aaa;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.section-card strong {
+  color: #c8c8e0;
+}
+
+.section-card em {
+  color: #c8c8e0;
+  font-style: italic;
+}
+
+/* ---- AHP Steps -------------------------------------------- */
+.ahp-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ahp-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ahp-step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ef0107, #9b0000);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ahp-step strong {
+  display: block;
+  font-size: 0.875rem;
+  color: #e8e8f0;
+  margin-bottom: 2px;
+}
+
+.ahp-step p {
+  font-size: 0.8rem;
+  color: #7070a0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---- Saaty Table ------------------------------------------ */
+.saaty-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-top: 8px;
+}
+
+.saaty-table th {
+  text-align: left;
+  padding: 8px 12px;
+  color: #4a4a6a;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.saaty-table td {
+  padding: 10px 12px;
+  color: #8a8aaa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.saaty-table td strong {
+  color: #e8e8f0;
+}
+
+.saaty-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ---- CTA -------------------------------------------------- */
+.about-cta {
+  text-align: center;
+  padding: 12px 0 20px;
+}
+
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #ef0107, #b30000);
+  color: #ffffff;
+  border: none;
+  border-radius: 100px;
+  padding: 14px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(239, 1, 7, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 28px rgba(239, 1, 7, 0.55);
+}
+
+.btn-start:focus-visible {
+  outline: 2px solid #ef0107;
+  outline-offset: 3px;
+}

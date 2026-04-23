@@ -1,0 +1,115 @@
+:host {
+  display: block;
+}
+
+.fwahp-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(8, 8, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  height: 60px;
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden; /* Prevent spill */
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 4px 6px;
+  transition: background 0.2s;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.nav-brand:hover,
+.nav-brand:focus-visible {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.nav-logo {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.nav-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e8e8f0;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .nav-title { display: none; }
+}
+
+.nav-ahp {
+  color: #ef0107;
+  font-weight: 900;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  display: inline-block;
+  padding: 6px 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #a0a0b8;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Hide non-essential links on mobile to prevent overflow */
+@media (max-width: 500px) {
+  .nav-link:not(.nav-link--cta) { display: none; }
+}
+
+@media (min-width: 600px) {
+  .nav-link { font-size: 0.875rem; padding: 7px 14px; gap: 4px; }
+}
+
+.nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-link--cta {
+  background: rgba(239, 1, 7, 0.1);
+  color: #ef0107 !important;
+  border: 1px solid rgba(239, 1, 7, 0.3);
+  margin-left: 4px;
+}
+
+@media (max-width: 400px) {
+  .nav-link--cta { padding: 6px 10px; font-size: 0.7rem; }
+}
+
+.nav-link--cta:hover {
+  background: #ef0107 !important;
+  color: #ffffff !important;
+}

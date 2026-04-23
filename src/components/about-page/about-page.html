@@ -1,0 +1,119 @@
+<div class="about">
+  <div class="about-inner">
+
+    <!-- Header -->
+    <header class="about-header">
+      <div class="about-badge">⚽ Football Weekly Podcast</div>
+      <h1 class="about-title">About This Tool</h1>
+      <p class="about-sub">
+        Built for the Football Weekly podcast community to scientifically resolve
+        the ultimate north London dilemma.
+      </p>
+    </header>
+
+    <!-- The Podcast -->
+    <section class="section-card">
+      <h2 class="card-title">🎙️ Football Weekly</h2>
+      <p>
+        Football Weekly is a podcast that brings passionate, opinionated, and often chaotic football
+        debate to listeners every week. The show covers the Premier League, European competitions,
+        and everything in between — with the kind of banter that only true football fans understand.
+      </p>
+      <p>
+        This season, the show faces its greatest existential crisis: which outcome would listeners
+        <em>actually</em> prefer more — Tottenham Hotspur getting relegated from the Premier League,
+        or Arsenal winning the title? It's the question that has divided fans, studios, and WhatsApp
+        groups across the land.
+      </p>
+    </section>
+
+    <!-- What is AHP -->
+    <section class="section-card">
+      <h2 class="card-title">🧮 What is the Analytic Hierarchy Process?</h2>
+      <p>
+        The <strong>Analytic Hierarchy Process (AHP)</strong> is a structured decision-making
+        framework developed by mathematician Thomas Saaty in the 1970s. It's used everywhere from
+        military procurement to urban planning — and now, the Premier League relegation battle.
+      </p>
+      <p>
+        AHP works by breaking a complex decision down into smaller, manageable pairwise comparisons.
+        Instead of asking "what do you prefer overall?" — which is hard to answer — it asks a series
+        of focused questions like "for <em>this</em> specific match, which outcome matters more to
+        you, and by how much?"
+      </p>
+      <div class="ahp-steps">
+        <div class="ahp-step">
+          <span class="ahp-step-num">1</span>
+          <div>
+            <strong>Define the Goal</strong>
+            <p>Determine your most preferred EPL season outcome.</p>
+          </div>
+        </div>
+        <div class="ahp-step">
+          <span class="ahp-step-num">2</span>
+          <div>
+            <strong>Identify Criteria</strong>
+            <p>Each remaining Premier League fixture is a "criterion" contributing to the outcome.</p>
+          </div>
+        </div>
+        <div class="ahp-step">
+          <span class="ahp-step-num">3</span>
+          <div>
+            <strong>Rate Your Preferences</strong>
+            <p>For each match, use the Saaty scale (1–9) to rate how strongly you prefer one outcome over the other.</p>
+          </div>
+        </div>
+        <div class="ahp-step">
+          <span class="ahp-step-num">4</span>
+          <div>
+            <strong>Compute Priority Weights</strong>
+            <p>AHP builds a pairwise matrix and derives importance weights using the eigenvector method.</p>
+          </div>
+        </div>
+        <div class="ahp-step">
+          <span class="ahp-step-num">5</span>
+          <div>
+            <strong>Calculate OVP</strong>
+            <p>The Overall Value Priority (OVP) aggregates your weighted preferences to reveal your true preferred outcome.</p>
+          </div>
+        </div>
+        <div class="ahp-step">
+          <span class="ahp-step-num">6</span>
+          <div>
+            <strong>Check Consistency</strong>
+            <p>The Consistency Ratio (CR) validates your preferences. CR &lt; 0.1 indicates a reliable result.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Saaty Scale -->
+    <section class="section-card">
+      <h2 class="card-title">📏 The Saaty Scale</h2>
+      <p>When comparing two criteria, the Saaty scale provides a standardised way to express relative importance:</p>
+      <table class="saaty-table">
+        <thead>
+          <tr>
+            <th scope="col">Intensity</th>
+            <th scope="col">Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>1</strong></td><td>Equal importance — no preference between outcomes</td></tr>
+          <tr><td><strong>3</strong></td><td>Moderate preference — one outcome is slightly more important</td></tr>
+          <tr><td><strong>5</strong></td><td>Strong preference — one outcome is clearly more important</td></tr>
+          <tr><td><strong>7</strong></td><td>Very strong preference — one outcome is strongly favoured</td></tr>
+          <tr><td><strong>9</strong></td><td>Extreme preference — one outcome is overwhelmingly more important</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- CTA -->
+    <div class="about-cta">
+      <button id="start-btn" class="btn-start" aria-label="Begin the AHP analysis">
+        Take the Analysis →
+      </button>
+    </div>
+
+  </div>
+</div>

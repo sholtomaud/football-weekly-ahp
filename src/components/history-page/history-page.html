@@ -1,0 +1,34 @@
+<div class="history">
+  <!-- Hero -->
+  <header class="history-header">
+    <div class="header-inner">
+      <h1 class="history-title">Your Past Analyses</h1>
+      <p class="history-sub">
+        Every time you complete the AHP analysis, your result is saved here automatically.
+      </p>
+      <div class="header-actions">
+        <button id="new-analysis-btn" class="btn-new" aria-label="Start a new analysis">
+          ⚽ Start New Analysis
+        </button>
+        <button id="clear-history-btn" class="btn-clear" aria-label="Clear all history">
+          Clear History
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Session list — populated by JavaScript -->
+  <div class="sessions-wrap">
+    <div id="sessions-list" class="sessions-list" role="list" aria-live="polite">
+      <!-- injected by history-page.ts -->
+    </div>
+    <div id="empty-state" class="empty-state" hidden>
+      <div class="empty-icon">📋</div>
+      <h2 class="empty-title">No analyses yet</h2>
+      <p class="empty-sub">Complete the AHP analysis and your results will appear here.</p>
+      <button id="empty-start-btn" class="btn-new" aria-label="Start your first analysis">
+        ⚽ Start Your First Analysis
+      </button>
+    </div>
+  </div>
+</div>

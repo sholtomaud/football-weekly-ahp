@@ -1,0 +1,121 @@
+export class Router {
+  static instance;
+  routes = [];
+
+  constructor() {
+    window.addEventListener('popstate', this.handleRoute.bind(this));
+  }
+
+  static getInstance() {
+    if (!Router.instance) {
+      Router.instance = new Router();
+    }
+    return Router.instance;
+  }
+
+  getAppPath() {
+    const pathname = window.location.pathname;
+    const BASE_URL = (window as any).BOBA_BASE_URL || '/';
+    const normalizedBaseUrl =
+      BASE_URL.endsWith('/') || BASE_URL === '/' ? BASE_URL : BASE_URL + '/';
+
+    if (
+      pathname.startsWith(normalizedBaseUrl) &&
+      normalizedBaseUrl.length > 1
+    ) {
+      let appPath = pathname.substring(normalizedBaseUrl.length);
+      if (!appPath.startsWith('/')) {
+        appPath = '/' + appPath;
+      }
+      return appPath === '' ? '/' : appPath;
+    }
+    return pathname.startsWith('/') ? pathname : '/' + pathname;
+  }
+
+  registerRoute(route) {
+    const normalizedPath = route.path.startsWith('/')
+      ? route.path
+      : '/' + route.path;
+
+    // Convert path like '/user/:id' to a regex and extract parameter names
+    const paramNames = [];
+    const regexSource = normalizedPath.replace(/:([^\/]+)/g, (_, paramName) => {
+      paramNames.push(paramName);
+      return '([^\\/]+)';
+    });
+
+    const regex = new RegExp(`^${regexSource}$`);
+    this.routes.push({ ...route, path: normalizedPath, regex, paramNames });
+  }
+
+  navigate(appPath) {
+    const normalizedAppPath = appPath.startsWith('/') ? appPath : '/' + appPath;
+    const BASE_URL = (window as any).BOBA_BASE_URL || '/';
+
+    const dummyAbsoluteBase = 'http://dummy';
+    const publicPath = new URL(
+      normalizedAppPath.substring(1),
+      dummyAbsoluteBase + (BASE_URL.endsWith('/') ? BASE_URL : BASE_URL + '/')
+    ).pathname;
+
+    if (window.location.pathname !== publicPath) {
+      window.history.pushState({}, '', publicPath);
+    }
+    this.handleRoute();
+  }
+
+  handleRoute() {
+    const appPathToMatch = this.getAppPath();
+    const match = this.findRoute(appPathToMatch);
+
+    if (match) {
+      this.loadComponent(match.route.component, match.params);
+    } else {
+      this.show404();
+    }
+  }
+
+  findRoute(path) {
+    for (const route of this.routes) {
+      const match = path.match(route.regex || new RegExp(`^${route.path}$`));
+      if (match) {
+        const params = {};
+        if (route.paramNames) {
+          route.paramNames.forEach((name, index) => {
+            params[name] = match[index + 1];
+          });
+        }
+        return { route, params };
+      }
+    }
+    return null;
+  }
+
+  async loadComponent(tagName, params = {}) {
+    const outlet = document.querySelector('#router-outlet');
+    if (!outlet) return;
+
+    try {
+      if (!customElements.get(tagName)) {
+        await import(`../../components/${tagName}/${tagName}.ts`);
+      }
+
+      const element = document.createElement(tagName);
+      // Pass parameters as properties to the component
+      Object.assign(element, params);
+
+      outlet.innerHTML = '';
+      outlet.appendChild(element);
+    } catch (error) {
+      console.error(`Failed to load component: ${tagName}`, error);
+      this.show404();
+    }
+  }
+
+  show404() {
+    const outlet = document.querySelector('#router-outlet');
+    if (outlet) {
+      outlet.innerHTML = '<h1>404 - Page Not Found</h1>';
+    }
+  }
+}

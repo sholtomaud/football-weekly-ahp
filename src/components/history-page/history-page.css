@@ -1,0 +1,344 @@
+:host {
+  display: block;
+}
+
+.history {
+  background: #080812;
+  min-height: calc(100vh - 60px);
+  font-family: var(--font-sans);
+  color: #e8e8f0;
+}
+
+/* ---- Header ----------------------------------------------- */
+.history-header {
+  background: #0f0f20;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 32px var(--container-px);
+}
+
+@media (min-width: 768px) {
+  .history-header { padding: 56px var(--container-px) 40px; }
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.history-title {
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+
+.history-sub {
+  color: #7070a0;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+@media (min-width: 768px) {
+  .history-sub { font-size: 1rem; margin-bottom: 32px; }
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+/* ---- Buttons ---------------------------------------------- */
+.btn-new {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ef0107, #b30000);
+  color: #ffffff;
+  border: none;
+  border-radius: 100px;
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(239, 1, 7, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(239, 1, 7, 0.5);
+}
+
+.btn-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #6b6b8a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #e8e8f0;
+}
+
+/* ---- Sessions list ---------------------------------------- */
+.sessions-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px var(--container-px) 80px;
+}
+
+@media (min-width: 768px) {
+  .sessions-wrap { padding-top: 40px; }
+}
+
+.sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .sessions-list { gap: 20px; }
+}
+
+/* ---- Session card ----------------------------------------- */
+.session-card {
+  background: #0f0f20;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 20px;
+  transition: all 0.25s ease;
+  animation: slideUp 0.4s ease both;
+}
+
+@media (min-width: 768px) {
+  .session-card { padding: 24px; }
+}
+
+.session-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.session-card--arsenal { border-left: 4px solid #ef0107; }
+.session-card--spurs   { border-left: 4px solid #132257; }
+.session-card--equal   { border-left: 4px solid #f5c518; }
+
+/* ---- Card top row ----------------------------------------- */
+.card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.card-winner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.winner-crest {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .winner-crest { width: 52px; height: 52px; }
+}
+
+.winner-crest svg {
+  width: 100%;
+  height: 100%;
+}
+
+.winner-info { display: flex; flex-direction: column; gap: 1px; }
+
+.winner-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #f5c518;
+}
+
+.winner-name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .winner-name { font-size: 1.15rem; }
+}
+
+/* ---- Card meta -------------------------------------------- */
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.meta-time {
+  font-size: 0.75rem;
+  color: #6b6b8a;
+  font-weight: 600;
+}
+
+.meta-date {
+  font-size: 0.7rem;
+  color: #4a4a6a;
+}
+
+.card-delete {
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  color: #4a4a6a;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  line-height: 1;
+  margin-top: 6px;
+}
+
+.card-delete:hover {
+  color: #ef0107;
+  background: rgba(239, 1, 7, 0.1);
+}
+
+/* ---- OVP bars --------------------------------------------- */
+.ovp-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.ovp-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ovp-team {
+  font-size: 0.78rem;
+  color: #8a8aaa;
+  width: 80px;
+  flex-shrink: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+@media (min-width: 480px) {
+  .ovp-team { width: 120px; }
+}
+
+.ovp-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.ovp-fill {
+  height: 100%;
+  border-radius: 5px;
+}
+
+.ovp-pct {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #e8e8f0;
+  width: 40px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ---- Card footer ------------------------------------------ */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.75rem;
+  color: #555575;
+  gap: 12px;
+}
+
+.footer-cr {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.cr-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.footer-matches {
+  font-weight: 500;
+}
+
+/* ---- Empty state ------------------------------------------ */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  background: rgba(255, 255, 255, 0.01);
+  border-radius: 24px;
+  border: 1px dashed rgba(255, 255, 255, 0.05);
+}
+
+.empty-icon { font-size: 3.5rem; margin-bottom: 20px; filter: grayscale(1); opacity: 0.5; }
+
+.empty-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.empty-sub {
+  color: #6b6b8a;
+  font-size: 0.95rem;
+  margin-bottom: 32px;
+  line-height: 1.6;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}

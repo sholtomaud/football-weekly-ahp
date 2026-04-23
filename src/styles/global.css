@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ============================================================
+   Football Weekly AHP — Global Design System
+   ============================================================ */
+
+:root {
+  /* Base palette */
+  --color-bg:         #080812;
+  --color-surface:    #0f0f20;
+  --color-surface-2:  #16162e;
+  --color-border:     rgba(255,255,255,0.08);
+  --color-text:       #e8e8f0;
+  --color-muted:      #6b6b8a;
+
+  /* Arsenal identity */
+  --color-arsenal:    #EF0107;
+  --color-arsenal-dark: #b30000;
+  --color-arsenal-glow: rgba(239,1,7,0.25);
+
+  /* Tottenham identity */
+  --color-spurs:      #132257;
+  --color-spurs-light: #1d3278;
+  --color-spurs-glow: rgba(19,34,87,0.4);
+
+  /* Pitch green */
+  --color-pitch:      #00b04f;
+  --color-pitch-dark: #007a36;
+
+  /* Neutral accent */
+  --color-gold:       #f5c518;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Spacing / Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-lg: 0 8px 48px rgba(0,0,0,0.6);
+
+  /* Responsive Spacing */
+  --container-px: 20px;
+  --section-py: 40px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-px: 40px;
+    --section-py: 80px;
+  }
+}
+
+/* ---- Reset & Base ----------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ---- Scrollbar -------------------------------------------- */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-surface); }
+::-webkit-scrollbar-thumb { background: var(--color-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-arsenal); }
+
+/* ---- Router outlet layout --------------------------------- */
+#router-outlet {
+  min-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: var(--container-px);
+  padding-right: var(--container-px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

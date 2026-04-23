@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Boba Color Variables */
+  --boba-primary: #111827; /* Gray 900 */
+  --boba-secondary: #4b5563; /* Gray 600 */
+  --boba-accent: #3b82f6; /* Blue 500 */
+  --boba-bg: #f9fafb; /* Gray 50 */
+  --boba-text: #1f2937; /* Gray 800 */
+}
+
+body {
+  background-color: var(--boba-bg);
+  color: var(--boba-text);
+}
