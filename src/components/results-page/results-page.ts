@@ -12,9 +12,18 @@ import spursCrest from '../../assets/crests/spurs-crest.svg?raw';
 
 function getOutcomeVisual(key: string): { crest: string; color: string } {
   if (key.includes('arsenal')) return { crest: arsenalCrest, color: '#ef0107' };
+  
+  if (key === 'spurs-relegated') {
+    return {
+      crest: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#7A263A" stroke="#1BB1E7" stroke-width="1.5"/><text x="50%" y="57%" text-anchor="middle" fill="white" font-weight="900" font-size="18">WHU</text></svg>`,
+      color: '#7A263A'
+    };
+  }
+
   if (key.includes('spurs') || key.includes('tottenham')) return { crest: spursCrest, color: '#132257' };
+  
   return { 
-    crest: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#6CABDD"/></svg>`, 
+    crest: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#6CABDD" stroke="#ffffff" stroke-width="1.5"/><text x="50%" y="57%" text-anchor="middle" fill="white" font-weight="900" font-size="18">MCFC</text></svg>`, 
     color: '#6CABDD' 
   };
 }

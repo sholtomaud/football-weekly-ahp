@@ -195,7 +195,7 @@ export class AHPEngine {
     const alternatives: AlternativeRank[] = [
       { name: 'Arsenal Win the Title',   key: 'arsenal-title',   score: sums['arsenal-title'] / total, rank: 0 },
       { name: 'Man City Win the Title',  key: 'city-title',      score: sums['city-title'] / total,    rank: 0 },
-      { name: 'Spurs Get Relegated',     key: 'spurs-relegated', score: sums['spurs-relegated'] / total, rank: 0 },
+      { name: 'West Ham Stay Up',        key: 'spurs-relegated', score: sums['spurs-relegated'] / total, rank: 0 },
       { name: 'Tottenham Survive',       key: 'spurs-survive',   score: sums['spurs-survive'] / total,   rank: 0 },
     ].sort((a,b) => b.score - a.score);
 

@@ -13,6 +13,7 @@ import spursCrest from '../../assets/crests/spurs-crest.svg?raw';
 function teamBadge(name: string, color: string): string {
   if (name === 'Arsenal') return arsenalCrest;
   if (name === 'Tottenham Hotspur') return spursCrest;
+  if (name === 'West Ham United') return `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="38" fill="#7A263A" stroke="#1BB1E7" stroke-width="2"/><text x="50%" y="55%" text-anchor="middle" fill="white" font-weight="900" font-size="20">WHU</text></svg>`;
   const initials = name
     .split(' ')
     .map((w) => w[0])
@@ -62,15 +63,15 @@ function buildStepHtml(step: number, total: number): string {
 
   const activeArsenalTitle   = (match.helpsArsenalTitle === 'home' && prefersHome) || (match.helpsArsenalTitle === 'away' && prefersAway);
   const activeCityTitle      = (match.helpsCityTitle === 'home' && prefersHome) || (match.helpsCityTitle === 'away' && prefersAway);
-  const activeSpursRelegated = (match.helpsSpursRelegated === 'home' && prefersHome) || (match.helpsSpursRelegated === 'away' && prefersAway);
+  const activeWestHamStayUp  = (match.helpsSpursRelegated === 'home' && prefersHome) || (match.helpsSpursRelegated === 'away' && prefersAway);
   const activeSpursSurvive   = (match.helpsSpursSurvive === 'home' && prefersHome) || (match.helpsSpursSurvive === 'away' && prefersAway);
 
   // What the current preference "helps"
   const helpsList = [];
   if (activeArsenalTitle)   helpsList.push('Arsenal Title');
   if (activeCityTitle)      helpsList.push('City Title');
-  if (activeSpursRelegated) helpsList.push('Spurs Relegated');
-  if (activeSpursSurvive)   helpsList.push('Spurs Survive');
+  if (activeWestHamStayUp)  helpsList.push('West Ham Stay Up');
+  if (activeSpursSurvive)   helpsList.push('Tottenham Survive');
 
   let helpsLabel = '';
   if (helpsList.length > 0) {
@@ -118,8 +119,8 @@ function buildStepHtml(step: number, total: number): string {
           <span class="strip-v4-label">City Title</span>
           <span class="strip-v4-val">${match.helpsCityTitle === 'neither' ? '—' : (match.helpsCityTitle === 'home' ? match.homeTeam : match.awayTeam)}</span>
         </div>
-        <div class="outcome-strip-v4 ${activeSpursRelegated ? 'active' : ''}">
-          <span class="strip-v4-label">Spurs Down</span>
+        <div class="outcome-strip-v4 ${activeWestHamStayUp ? 'active' : ''}">
+          <span class="strip-v4-label">West Ham Stay Up</span>
           <span class="strip-v4-val">${match.helpsSpursRelegated === 'neither' ? '—' : (match.helpsSpursRelegated === 'home' ? match.homeTeam : match.awayTeam)}</span>
         </div>
         <div class="outcome-strip-v4 ${activeSpursSurvive ? 'active' : ''}">
@@ -279,12 +280,12 @@ export class AnalysisComponent extends BaseComponent {
     root.querySelector('.team-col--home')?.classList.toggle('preferred', prefersHome);
     root.querySelector('.team-col--away')?.classList.toggle('preferred', prefersAway);
 
-    const spursActive = (match.spursRelegatedBeneficiary === 'home' && prefersHome)
-                     || (match.spursRelegatedBeneficiary === 'away' && prefersAway);
-    const arsenalActive = (match.arsenalTitleBeneficiary === 'home' && prefersHome)
-                       || (match.arsenalTitleBeneficiary === 'away' && prefersAway);
+    const westHamActive = (match.helpsSpursRelegated === 'home' && prefersHome)
+                     || (match.helpsSpursRelegated === 'away' && prefersAway);
+    const arsenalActive = (match.helpsArsenalTitle === 'home' && prefersHome)
+                       || (match.helpsArsenalTitle === 'away' && prefersAway);
 
-    root.querySelector('.outcome-strip--spurs')?.classList.toggle('active', spursActive);
+    root.querySelector('.outcome-strip--spurs')?.classList.toggle('active', westHamActive);
     root.querySelector('.outcome-strip--arsenal')?.classList.toggle('active', arsenalActive);
   }
 
@@ -296,16 +297,16 @@ export class AnalysisComponent extends BaseComponent {
     const prefersHome = val < -0.1;
     const prefersAway = val > 0.1;
     
-    const activeArsenalTitle   = (match.helpsArsenalTitle === 'home' && prefersHome) || (match.helpsArsenalTitle === 'away' && prefersAway);
-    const activeCityTitle      = (match.helpsCityTitle === 'home' && prefersHome) || (match.helpsCityTitle === 'away' && prefersAway);
-    const activeSpursRelegated = (match.helpsSpursRelegated === 'home' && prefersHome) || (match.helpsSpursRelegated === 'away' && prefersAway);
-    const activeSpursSurvive   = (match.helpsSpursSurvive === 'home' && prefersHome) || (match.helpsSpursSurvive === 'away' && prefersAway);
+    const activeArsenalTitle  = (match.helpsArsenalTitle === 'home' && prefersHome) || (match.helpsArsenalTitle === 'away' && prefersAway);
+    const activeCityTitle     = (match.helpsCityTitle === 'home' && prefersHome) || (match.helpsCityTitle === 'away' && prefersAway);
+    const activeWestHamStayUp = (match.helpsSpursRelegated === 'home' && prefersHome) || (match.helpsSpursRelegated === 'away' && prefersAway);
+    const activeSpursSurvive  = (match.helpsSpursSurvive === 'home' && prefersHome) || (match.helpsSpursSurvive === 'away' && prefersAway);
 
     const helpsList = [];
     if (activeArsenalTitle)   helpsList.push('Arsenal Title');
     if (activeCityTitle)      helpsList.push('City Title');
-    if (activeSpursRelegated) helpsList.push('Spurs Relegated');
-    if (activeSpursSurvive)   helpsList.push('Spurs Survive');
+    if (activeWestHamStayUp)  helpsList.push('West Ham Stay Up');
+    if (activeSpursSurvive)   helpsList.push('Tottenham Survive');
 
     helps.className = 'helps-label';
 
@@ -325,7 +326,7 @@ export class AnalysisComponent extends BaseComponent {
     const strips = root.querySelectorAll('.outcome-strip-v4');
     strips[0]?.classList.toggle('active', activeArsenalTitle);
     strips[1]?.classList.toggle('active', activeCityTitle);
-    strips[2]?.classList.toggle('active', activeSpursRelegated);
+    strips[2]?.classList.toggle('active', activeWestHamStayUp);
     strips[3]?.classList.toggle('active', activeSpursSurvive);
   }
 }
