@@ -6,27 +6,32 @@
  *   v > 0  → prefer AWAY team to win
  *   v = 0  → no preference
  *
- * Real 2025-26 fixture map (15 matches):
+ * Real 2025-26 fixture map (19 matches):
  *   GW34:
- *    0  Wolves vs Tottenham (Apr 26)     arsenal: neither, spurs: HOME(Wolves)
+ *    0  West Ham vs Everton              spurs: HOME(West Ham) [Safe → Rel ✓]
+ *    1  Arsenal vs Newcastle             arsenal: HOME(Arsenal)
+ *    2  Wolves vs Tottenham              spurs: HOME(Wolves) [Rel ✓]
  *   GW35:
- *    1  Arsenal vs Fulham (May 3)        arsenal: HOME(Arsenal), spurs: neither
- *    2  Aston Villa vs Tottenham (May 5) arsenal: neither, spurs: HOME(Aston Villa)
- *    3  Everton vs Man City (May 5)      arsenal: HOME(Everton), spurs: neither
+ *    3  Brentford vs West Ham            spurs: AWAY(West Ham) [Safe → Rel ✓]
+ *    4  Arsenal vs Fulham                arsenal: HOME(Arsenal)
+ *    5  Aston Villa vs Tottenham         spurs: HOME(Aston Villa) [Rel ✓]
+ *    6  Everton vs Man City              arsenal: HOME(Everton)
  *   GW36:
- *    4  Man City vs Brentford (May 10)   arsenal: AWAY(Brentford), spurs: neither
- *    5  West Ham vs Arsenal (May 12) ⚡  arsenal: AWAY(Arsenal), spurs: HOME(West Ham) — CONFLICT
- *    6  Tottenham vs Leeds (May 12)      arsenal: neither, spurs: AWAY(Leeds)
+ *    7  Man City vs Brentford            arsenal: AWAY(Brentford)
+ *    8  West Ham vs Arsenal ⚡           arsenal: AWAY(Arsenal), spurs: HOME(West Ham) — CONFLICT
+ *    9  Tottenham vs Leeds               spurs: AWAY(Leeds) [Rel ✓]
  *   GW37:
- *    7  Bournemouth vs Man City (May 18) arsenal: HOME(Bournemouth), spurs: neither
- *    8  Arsenal vs Burnley (May 18)      arsenal: HOME(Arsenal), spurs: neither
- *    9  Chelsea vs Tottenham (May 18)    arsenal: neither, spurs: HOME(Chelsea)
- *   10  Newcastle vs West Ham (May 18)   arsenal: neither, spurs: AWAY(West Ham)
+ *   10  Bournemouth vs Man City          arsenal: HOME(Bournemouth)
+ *   11  Arsenal vs Burnley               arsenal: HOME(Arsenal)
+ *   12  Chelsea vs Tottenham             spurs: HOME(Chelsea) [Rel ✓]
+ *   13  Newcastle vs West Ham            spurs: AWAY(West Ham) [Safe → Rel ✓]
+ *   GW31 (Rescheduled):
+ *   14  Man City vs Palace               arsenal: AWAY(Palace)
  *   GW38 — Final Day:
- *   11  Crystal Palace vs Arsenal        arsenal: AWAY(Arsenal), spurs: neither
- *   12  Man City vs Aston Villa          arsenal: AWAY(Aston Villa), spurs: neither
- *   13  Tottenham vs Everton             arsenal: neither, spurs: AWAY(Everton)
- *   14  West Ham vs Leeds                arsenal: neither, spurs: HOME(West Ham)
+ *   15  Crystal Palace vs Arsenal        arsenal: AWAY(Arsenal)
+ *   16  Man City vs Aston Villa          arsenal: AWAY(Aston Villa)
+ *   17  Tottenham vs Everton             spurs: AWAY(Everton) [Rel ✓]
+ *   18  West Ham vs Leeds                spurs: HOME(West Ham) [Safe → Rel ✓]
  *
  * ⚡ CONFLICT (match 5 — West Ham vs Arsenal):
  *   Sliding towards Arsenal (AWAY, positive) helps the title but costs West Ham points.
@@ -99,21 +104,25 @@ describe('Scenario: Pure Arsenal Title preference', () => {
    */
   it('should return arsenal-title', () => {
     const sliders = [
-       0,  //  0  Wolves vs Tottenham     — neutral
-      -4,  //  1  Arsenal vs Fulham       — want Arsenal (HOME)  → Arsenal title ✓
-       0,  //  2  Villa vs Tottenham      — neutral
-      -4,  //  3  Everton vs Man City     — want Everton (HOME) beat City → Arsenal title ✓
-       4,  //  4  Man City vs Brentford   — want Brentford (AWAY) beat City → Arsenal title ✓
-       4,  //  5  West Ham vs Arsenal ⚡  — want Arsenal (AWAY) → Arsenal title ✓
-       0,  //  6  Tottenham vs Leeds      — neutral
-      -4,  //  7  Bournemouth vs Man City — want Bournemouth (HOME) beat City → Arsenal title ✓
-      -4,  //  8  Arsenal vs Burnley      — want Arsenal (HOME) → Arsenal title ✓
-       0,  //  9  Chelsea vs Tottenham    — neutral
-       0,  // 10  Newcastle vs West Ham   — neutral
-       4,  // 11  Palace vs Arsenal       — want Arsenal (AWAY) Final Day → Arsenal title ✓
-       4,  // 12  Man City vs Aston Villa — want Villa (AWAY) beat City → Arsenal title ✓
-       0,  // 13  Tottenham vs Everton    — neutral
-       0,  // 14  West Ham vs Leeds       — neutral
+       0,  //  0  West Ham vs Everton
+      -4,  //  1  Arsenal vs Newcastle    → Arsenal
+       0,  //  2  Wolves vs Tottenham
+       0,  //  3  Brentford vs West Ham
+      -4,  //  4  Arsenal vs Fulham       → Arsenal
+       0,  //  5  Villa vs Tottenham
+      -4,  //  6  Everton vs Man City     → beat City → Arsenal
+       4,  //  7  Man City vs Brentford   → beat City → Arsenal
+       4,  //  8  West Ham vs Arsenal ⚡ → Arsenal
+       0,  //  9  Tottenham vs Leeds
+      -4,  // 10  Bournemouth vs City     → beat City → Arsenal
+      -4,  // 11  Arsenal vs Burnley      → Arsenal
+       0,  // 12  Chelsea vs Tottenham
+       0,  // 13  Newcastle vs West Ham
+       4,  // 14  Man City vs Palace      → beat City → Arsenal
+       4,  // 15  Palace vs Arsenal       → Arsenal
+       4,  // 16  Man City vs Aston Villa → beat City → Arsenal
+       0,  // 17  Tottenham vs Everton
+       0,  // 18  West Ham vs Leeds
     ];
     const result = runScenario(sliders, [
       'Neutral',
@@ -137,7 +146,7 @@ describe('Scenario: Pure Arsenal Title preference', () => {
   });
 
   it('should have very high confidence (>70%)', () => {
-    const sliders = [0, -4, 0, -4, 4, 4, 0, -4, -4, 0, 0, 4, 4, 0, 0];
+    const sliders = [0, -4, 0, 0, -4, 0, -4, 4, 4, 0, -4, -4, 0, 0, 4, 4, 4, 0, 0];
     const engine = new AHPEngine();
     engine.setMatches(REMAINING_MATCHES);
     sliders.forEach((v, i) => engine.setSliderValue(i, v));
@@ -149,23 +158,27 @@ describe('Scenario: Pure Arsenal Title preference', () => {
 describe('Scenario: Pure Spurs Survive preference', () => {
   it('should return spurs-survive when maximizing spurs win/rival loss', () => {
     const sliders = [
-       4,  //  0  Wolves vs Spurs     → want Spurs win ✓
-       0,  //  1  Arsenal vs Fulham
-       4,  //  2  Villa vs Spurs      → want Spurs win ✓
-       0,  //  3  Everton vs City
-       0,  //  4  Man City vs Brentford
-       4,  //  5  West Ham vs Arsenal → want Arsenal win ✓ (hurts West Ham pts)
-      -4,  //  6  Spurs vs Leeds      → want Spurs win ✓
-       0,  //  7  Bournemouth vs City
-       0,  //  8  Arsenal vs Burnley
-       4,  //  9  Chelsea vs Spurs    → want Spurs win ✓
-      -4,  // 10  Newcastle vs WHam   → want Newcastle win ✓ (West Ham drop pts)
-       0,  // 11  Palace vs Arsenal
-       0,  // 12  Man City vs Villa
-      -4,  // 13  Spurs vs Everton    → want Spurs win ✓
-       4,  // 14  West Ham vs Leeds   → want Leeds win ✓ (West Ham drop pts)
+       4,  //  0  West Ham vs Everton → want Everton win ✓ (West Ham drop pts)
+       0,  //  1  Arsenal vs Newcastle 
+       4,  //  2  Wolves vs Spurs     → want Spurs win ✓
+      -4,  //  3  Brentford vs WHam   → want Brentford win ✓ (West Ham drop pts)
+       0,  //  4  Arsenal vs Fulham
+       4,  //  5  Villa vs Spurs      → want Spurs win ✓
+       0,  //  6  Everton vs City
+       0,  //  7  Man City vs Brentford
+       4,  //  8  West Ham vs Arsenal → want Arsenal win ✓ (hurts West Ham pts)
+      -4,  //  9  Spurs vs Leeds      → want Spurs win ✓
+       0,  // 10  Bournemouth vs City
+       0,  // 11  Arsenal vs Burnley
+       4,  // 12  Chelsea vs Spurs    → want Spurs win ✓
+      -4,  // 13  Newcastle vs WHam   → want Newcastle win ✓ (West Ham drop pts)
+       0,  // 14  Man City vs Palace
+       0,  // 15  Palace vs Arsenal
+       0,  // 16  Man City vs Villa
+      -4,  // 17  Spurs vs Everton    → want Spurs win ✓
+       4,  // 18  West Ham vs Leeds   → want Leeds win ✓ (West Ham drop pts)
     ];
-    const result = runScenario(sliders, Array(15).fill('Spurs survival focus'));
+    const result = runScenario(sliders, Array(19).fill('Spurs survival focus'));
     console.log(result.trace);
     assert.equal(result.preferred, 'spurs-survive');
   });
@@ -174,23 +187,27 @@ describe('Scenario: Pure Spurs Survive preference', () => {
 describe('Scenario: Pure Spurs Relegated preference', () => {
   it('should return spurs-relegated', () => {
     const sliders = [
-      -4,  //  0  Wolves vs Tottenham     → want Wolves (HOME) to win → Spurs relegated ✓
-       0,  //  1  Arsenal vs Fulham       — neutral
-      -4,  //  2  Villa vs Tottenham      — want Villa (HOME) to win → Spurs relegated ✓
-       0,  //  3  Everton vs Man City     — neutral
-       0,  //  4  Man City vs Brentford   — neutral
-      -4,  //  5  West Ham vs Arsenal ⚡  — want West Ham (HOME) → keeps them safe → Spurs relegated ✓
-       4,  //  6  Tottenham vs Leeds      — want Leeds (AWAY) → Spurs relegated ✓
-       0,  //  7  Bournemouth vs Man City — neutral
-       0,  //  8  Arsenal vs Burnley      — neutral
-      -4,  //  9  Chelsea vs Tottenham    — want Chelsea (HOME) → Spurs relegated ✓
-       4,  // 10  Newcastle vs West Ham   — want West Ham (AWAY) to win → Spurs safe → relegated ✓
-       0,  // 11  Palace vs Arsenal       — neutral
-       0,  // 12  Man City vs Aston Villa — neutral
-       4,  // 13  Tottenham vs Everton    — want Everton (AWAY) → Spurs relegated ✓
-      -4,  // 14  West Ham vs Leeds       — want West Ham (HOME) → safe → Spurs relegated ✓
+      -4,  //  0  West Ham vs Everton    → want WHU (HOME) to win → safe ✓
+       0,  //  1  Arsenal vs Newcastle
+      -4,  //  2  Wolves vs Tottenham     → want Wolves (HOME) to win → Spurs relegated ✓
+      -4,  //  3  Brentford vs West Ham   → want WHU (AWAY) to win → safe ✓
+       0,  //  4  Arsenal vs Fulham
+      -4,  //  5  Villa vs Tottenham      — want Villa (HOME) to win → Spurs relegated ✓
+       0,  //  6  Everton vs Man City
+       0,  //  7  Man City vs Brentford
+      -4,  //  8  West Ham vs Arsenal ⚡  — want West Ham (HOME) → keeps them safe → Spurs relegated ✓
+       4,  //  9  Tottenham vs Leeds      — want Leeds (AWAY) → Spurs relegated ✓
+       0,  // 10  Bournemouth vs Man City
+       0,  // 11  Arsenal vs Burnley
+      -4,  // 12  Chelsea vs Tottenham    — want Chelsea (HOME) → Spurs relegated ✓
+       4,  // 13  Newcastle vs West Ham   — want West Ham (AWAY) to win → safe ✓
+       0,  // 14  Man City vs Palace
+       0,  // 15  Palace vs Arsenal
+       0,  // 16  Man City vs Villa
+       4,  // 17  Tottenham vs Everton    — want Everton (AWAY) → Spurs relegated ✓
+      -4,  // 18  West Ham vs Leeds       — want West Ham (HOME) → safe ✓
     ];
-    const result = runScenario(sliders, Array(15).fill('Relegation focus'));
+    const result = runScenario(sliders, Array(19).fill('Relegation focus'));
     console.log(result.trace);
     assert.equal(result.preferred, 'spurs-relegated');
   });
@@ -219,21 +236,25 @@ describe('Scenario: Balanced equal-magnitude → equal (mathematically correct)'
   it('conflict match tiebreaker: when all equal, the conflict match slides determine the winner', () => {
     // All non-conflict Arsenal matches + Spurs matches at same magnitude
     const arsenalFirstSliders = [
-       0,  //  0  Wolves–Spurs         (no arsenal preference)
-      -4,  //  1  Arsenal vs Fulham    → arsenal
-       0,  //  2  Villa–Spurs          (no arsenal preference)
-      -4,  //  3  Everton vs City      → arsenal (home)
-       4,  //  4  City vs Brentford    → arsenal (away)
-       4,  //  5  West Ham vs Arsenal ⚡ → ARSENAL (away) — conflict, picks arsenal
-       0,  //  6  Spurs–Leeds          (no arsenal preference)
-      -4,  //  7  Bournemouth vs City  → arsenal (home)
-      -4,  //  8  Arsenal vs Burnley   → arsenal
-       0,  //  9  Chelsea–Spurs        (no arsenal preference)
-       0,  // 10  Newcastle–West Ham   (no arsenal preference)
-       4,  // 11  Palace vs Arsenal    → arsenal (away)
-       4,  // 12  City vs Villa        → arsenal (away)
-       0,  // 13  Spurs vs Everton     (no arsenal preference)
-       0,  // 14  West Ham vs Leeds    (no arsenal preference)
+       0,  //  0  WHU vs EVE
+      -4,  //  1  Arsenal vs Newcastle → Arsenal
+       0,  //  2  Wolves–Spurs 
+       0,  //  3  Brentford–WHU
+      -4,  //  4  Arsenal vs Fulham    → Arsenal
+       0,  //  5  Villa–Spurs
+      -4,  //  6  Everton vs City      → Arsenal
+       4,  //  7  City vs Brentford    → Arsenal
+       4,  //  8  West Ham vs Arsenal ⚡ → Arsenal
+       0,  //  9  Spurs–Leeds
+      -4,  // 10  Bournemouth vs City  → Arsenal
+      -4,  // 11  Arsenal vs Burnley   → Arsenal
+       0,  // 12  Chelsea–Spurs
+       0,  // 13  Newcastle–West Ham
+       4,  // 14  Man City vs Palace   → Arsenal (away)
+       4,  // 15  Palace vs Arsenal    → Arsenal
+       4,  // 16  City vs Villa        → Arsenal
+       0,  // 17  Spurs vs Everton
+       0,  // 18  West Ham vs Leeds
     ];
     const engine = new AHPEngine();
     engine.setMatches(REMAINING_MATCHES);
@@ -246,21 +267,25 @@ describe('Scenario: Balanced equal-magnitude → equal (mathematically correct)'
 
   it('conflict match tiebreaker: sliding conflict towards West Ham tips the balance toward spurs', () => {
     const spursFirstSliders = [
-      -4,  //  0  Wolves–Spurs         →  spurs relegated (Wolves home)
-       0,  //  1  Arsenal vs Fulham    (no spurs preference)
-      -4,  //  2  Villa–Spurs          →  spurs relegated (Villa home)
-       0,  //  3  Everton vs City      (no spurs preference)
-       0,  //  4  City vs Brentford    (no spurs preference)
-      -4,  //  5  West Ham vs Arsenal ⚡ → WEST HAM (home) — keeps them safe → spurs relegated
-       4,  //  6  Spurs–Leeds          →  spurs relegated (Leeds away)
-       0,  //  7  Bournemouth vs City  (no spurs preference)
-       0,  //  8  Arsenal vs Burnley   (no spurs preference)
-      -4,  //  9  Chelsea–Spurs        →  spurs relegated (Chelsea home)
-       4,  // 10  Newcastle–West Ham   →  spurs relegated (West Ham away win)
-       0,  // 11  Palace vs Arsenal    (no spurs preference)
-       0,  // 12  City vs Villa        (no spurs preference)
-       4,  // 13  Spurs vs Everton     →  spurs relegated (Everton away)
-      -4,  // 14  West Ham vs Leeds    →  spurs relegated (West Ham home)
+      -4,  //  0  West Ham vs Everton → WHU safe 
+       0,  //  1  Arsenal vs Newcastle 
+      -4,  //  2  Wolves–Spurs         → Rel
+      -4,  //  3  Brentford vs West Ham → WHU safe
+       0,  //  4  Arsenal vs Fulham
+      -4,  //  5  Villa–Spurs          → Rel
+       0,  //  6  Everton vs City
+       0,  //  7  City vs Brentford
+      -4,  //  8  West Ham vs Arsenal ⚡ → Rel
+       4,  //  9  Spurs–Leeds          → Rel
+       0,  // 10  Bournemouth vs City
+       0,  // 11  Arsenal vs Burnley
+      -4,  // 12  Chelsea–Spurs        → Rel
+       4,  // 13  Newcastle–West Ham   → Rel
+       0,  // 14  Man City vs Palace
+       0,  // 15  Palace vs Arsenal
+       0,  // 16  City vs Villa
+       4,  // 17  Spurs vs Everton     → Rel
+      -4,  // 18  West Ham vs Leeds    → Rel
     ];
     const engine = new AHPEngine();
     engine.setMatches(REMAINING_MATCHES);
@@ -273,8 +298,8 @@ describe('Scenario: Balanced equal-magnitude → equal (mathematically correct)'
 });
 
 describe('Scenario: Matches data integrity', () => {
-  it('should have 15 matches (GW34–GW38)', () => {
-    assert.equal(REMAINING_MATCHES.length, 15);
+  it('should have 19 matches (GW34–GW38 + Rescheduled)', () => {
+    assert.equal(REMAINING_MATCHES.length, 19);
   });
 
   it('exactly one conflict match between Title and Relegated', () => {
@@ -286,20 +311,20 @@ describe('Scenario: Matches data integrity', () => {
     assert.equal(conflicts[0].id, 'gw36-west-ham-arsenal');
   });
 
-  it('seven Arsenal-title matches (excl. conflict)', () => {
+  it('nine Arsenal-title matches (excl. conflict)', () => {
     const count = REMAINING_MATCHES.filter(
-      m => m.helpsArsenalTitle !== 'neither' && m.helpsSpursRelegated === 'neither'
+      m => m.helpsArsenalTitle !== 'neither' && (m.helpsSpursRelegated === 'neither' && m.helpsSpursSurvive === 'neither')
     ).length;
-    assert.equal(count, 7,
-      'Should have 7 pure Arsenal-title matches (conflict match counted separately)');
+    assert.equal(count, 9,
+      'Should have 9 pure Arsenal-title matches (conflict match counted separately)');
   });
 
-  it('seven Spurs-relegated matches (excl. conflict)', () => {
+  it('nine Spurs-relegated matches (excl. conflict)', () => {
     const count = REMAINING_MATCHES.filter(
       m => m.helpsSpursRelegated !== 'neither' && m.helpsArsenalTitle === 'neither'
     ).length;
-    assert.equal(count, 7,
-      'Should have 7 pure Spurs-relegated matches (conflict match counted separately)');
+    assert.equal(count, 9,
+      'Should have 9 pure Spurs-relegated matches (conflict match counted separately)');
   });
 
   it('all matches have valid dates from Apr 2026 onward', () => {
@@ -315,21 +340,25 @@ describe('Scenario: Wrong direction (contradictory inputs)', () => {
   it('sliding toward Spurs WINNING their matches suppresses spurs-relegated score', () => {
     // Arsenal matches at full strength (positive), but SPURS matches at WRONG direction (home)
     const sliders = [
-      -4,  //  0  Wolves vs Spurs: want Wolves home → ✓ Spurs relegated (correct)
-      -4,  //  1  Arsenal vs Fulham: want Arsenal home → ✓ Arsenal title
-      -4,  //  2  Villa vs Spurs: want Villa home → ✓ Spurs relegated (correct)
-      -4,  //  3  Everton vs City: want Everton home → ✓ Arsenal title
-       4,  //  4  City vs Brentford: want Brentford away → ✓ Arsenal title
-       4,  //  5  West Ham vs Arsenal: want Arsenal away → ✓ Arsenal title (✗ conflict match, West Ham loses)
-      -4,  //  6  Spurs vs Leeds: want SPURS (HOME) to win → ✗ HURTS Spurs relegated
-      -4,  //  7  Bournemouth vs City: want Bournemouth home → ✓ Arsenal title
-      -4,  //  8  Arsenal vs Burnley: want Arsenal home → ✓ Arsenal title
-      -4,  //  9  Chelsea vs Spurs: want SPURS to win (HOME!) → ✗ HURTS Spurs relegated
-       4,  // 10  Newcastle vs WHam: want West Ham away → ✓ Spurs relegated (correct)
-       4,  // 11  Palace vs Arsenal: want Arsenal away → ✓ Arsenal title
-       4,  // 12  City vs Villa: want Villa away → ✓ Arsenal title
-      -4,  // 13  Spurs vs Everton: want SPURS (HOME) to win → ✗ HURTS Spurs relegated
-       4,  // 14  West Ham vs Leeds: want Leeds (AWAY) → ✗ HURTS Spurs relegated (West Ham need to win)
+      -4,  //  0  West Ham vs Everton: want WHU safe → Rel
+      -4,  //  1  Arsenal vs Newcastle: want Arsenal home → ✓ Arsenal title
+      -4,  //  2  Wolves vs Spurs: want Wolves home → ✓ Spurs relegated
+      -4,  //  3  Brentford vs WHam: want WHU safe → Rel
+      -4,  //  4  Arsenal vs Fulham: want Arsenal home → ✓ Arsenal title
+      -4,  //  5  Villa vs Spurs: want Villa home → ✓ Spurs relegated
+      -4,  //  6  Everton vs City: want Everton home → ✓ Arsenal title
+       4,  //  7  City vs Brentford: want Brentford away → ✓ Arsenal title
+       4,  //  8  West Ham vs Arsenal: want Arsenal away → ✓ Arsenal title
+      -4,  //  9  Spurs vs Leeds: want SPURS (HOME) to win → ✗ HURTS Rel
+      -4,  // 10  Bournemouth vs City: want Bournemouth home → ✓ Arsenal title
+      -4,  // 11  Arsenal vs Burnley: want Arsenal home → ✓ Arsenal title
+      -4,  // 12  Chelsea vs Spurs: want SPURS to win (HOME!) → ✗ HURTS Rel
+       4,  // 13  Newcastle vs WHam: want West Ham away → ✓ Rel
+       4,  // 14  Man City vs Palace: want Palace away → ✓ Arsenal
+       4,  // 15  Palace vs Arsenal: want Arsenal away → ✓ Arsenal title
+       4,  // 16  City vs Villa: want Villa away → ✓ Arsenal title
+      -4,  // 17  Spurs vs Everton: want SPURS (HOME) to win → ✗ HURTS Rel
+       4,  // 18  West Ham vs Leeds: want Leeds (AWAY) → ✗ HURTS Rel
     ];
     const engine = new AHPEngine();
     engine.setMatches(REMAINING_MATCHES);

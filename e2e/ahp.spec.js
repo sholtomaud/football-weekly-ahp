@@ -35,8 +35,8 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
   test('can complete the full analysis flow', async ({ page }) => {
     await page.goto('/analysis');
 
-    // Work through all 15 match steps
-    for (let i = 0; i < 15; i++) {
+    // Work through all 19 match steps
+    for (let i = 0; i < 19; i++) {
       const analysisPage = page.locator('analysis-page');
       
       // Wait for slider to be interactable

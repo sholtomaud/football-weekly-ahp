@@ -206,9 +206,9 @@ describe('Consistency Ratio', () => {
 });
 
 describe('Matches data', () => {
-  it('REMAINING_MATCHES has 15 entries', async () => {
+  it('REMAINING_MATCHES has 19 entries', async () => {
     const { REMAINING_MATCHES } = await import('../src/core/ahp/matches-data.ts');
-    assert.equal(REMAINING_MATCHES.length, 15);
+    assert.equal(REMAINING_MATCHES.length, 19);
   });
 
   it('every match has required fields', async () => {
@@ -220,7 +220,7 @@ describe('Matches data', () => {
       assert.ok(m.awayTeam,         `${m.id}: missing awayTeam`);
       assert.ok(m.homeColor,        `${m.id}: missing homeColor`);
       assert.ok(m.awayColor,        `${m.id}: missing awayColor`);
-      assert.ok(m.gameweek >= 34,   `${m.id}: gameweek should be >= 34`);
+      assert.ok(m.gameweek >= 31,   `${m.id}: gameweek should be >= 31`);
       assert.ok(
         ['home', 'away', 'neither'].includes(m.helpsSpursRelegated),
         `${m.id}: invalid helpsSpursRelegated`
