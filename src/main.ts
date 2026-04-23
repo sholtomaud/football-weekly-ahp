@@ -6,10 +6,8 @@ import './components/about-page/about-page.ts';
 import './components/history-page/history-page.ts';
 import { Router } from './core/router/router.ts';
 
-// GitHub Pages base URL for this repo
-// Dynamic base URL for routing (GitHub Pages vs Local Dev)
-const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-window.BOBA_BASE_URL = isLocal ? '/' : '/football-weekly-ahp/';
+// Base URL management for routing (Vite handles this automatically)
+window.BOBA_BASE_URL = import.meta.env.BASE_URL || '/';
 
 function getInitialAppPath() {
   const pathname = window.location.pathname;

@@ -36,16 +36,19 @@ jobs:
       - name: Run E2E tests
         run: npx playwright test
 
+      - name: Build project
+        run: npm run build
+
       - name: Prepare 404 page for SPA
-        run: cp index.html 404.html
+        run: cp dist/index.html dist/404.html
 
       - name: Add .nojekyll
-        run: touch .nojekyll
+        run: touch dist/.nojekyll
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
           # We deploy the whole root since it's a zero-build project
 
   deploy:
