@@ -70,7 +70,7 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
     const headingText = await heading.innerText();
     expect(headingText).toMatch(/Title|Spurs|City|Priority|Result/i);
     
-    // Also verify that the OVP bars are present
-    await expect(resultsPage.locator('.ovp-row').first()).toBeVisible();
+    // Also verify that the OVP bars are present (using correct class)
+    await expect(resultsPage.locator('.alt-bar').first()).toBeVisible({ timeout: 5000 });
   });
 });
