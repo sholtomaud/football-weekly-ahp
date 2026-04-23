@@ -6,6 +6,8 @@
 
 Built on the minimalist **Boba Web Components** framework, this app maps your match-by-match preferences to these high-stakes season outcomes using linear algebraic decision logic.
 
+https://sholtomaud.github.io/football-weekly-ahp/
+
 ## 🏆 The Scenario (2025–26)
 
 The application is tuned to the specific standings of the 2025–26 season run-in:
