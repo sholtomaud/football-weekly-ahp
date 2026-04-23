@@ -7,7 +7,9 @@ import './components/history-page/history-page.ts';
 import { Router } from './core/router/router.ts';
 
 // GitHub Pages base URL for this repo
-window.BOBA_BASE_URL = '/football-weekly-ahp/';
+// Dynamic base URL for routing (GitHub Pages vs Local Dev)
+const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+window.BOBA_BASE_URL = isLocal ? '/' : '/football-weekly-ahp/';
 
 function getInitialAppPath() {
   const pathname = window.location.pathname;
