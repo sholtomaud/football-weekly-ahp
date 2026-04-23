@@ -68,7 +68,7 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
     
     // Assert against the heading's text directly (pierces shadow DOM)
     const headingText = await heading.innerText();
-    expect(headingText).toMatch(/Title|Spurs|City|Priority|Result/i);
+    expect(headingText).toMatch(/Arsenal|City|Spurs|Tottenham|Title|Survive|Relegated|Heat/i);
     
     // Also verify that the OVP bars are present (using correct class)
     await expect(resultsPage.locator('.alt-bar').first()).toBeVisible({ timeout: 5000 });
