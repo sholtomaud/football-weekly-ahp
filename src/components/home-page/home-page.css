@@ -138,9 +138,17 @@
   gap: 20px;
 }
 
-@media (min-width: 800px) {
+@media (min-width: 640px) {
   .camps-inner {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .camps-inner {
+    grid-template-columns: repeat(4, 1fr);
     gap: 24px;
   }
 }
@@ -178,13 +186,26 @@
   box-shadow: 0 8px 48px rgba(19, 34, 87, 0.4);
 }
 
-.camp-card--arsenal {
-  border-top: 3px solid #ef0107;
-  box-shadow: 0 4px 20px rgba(239, 1, 7, 0.1);
-}
-
 .camp-card--arsenal:hover {
   box-shadow: 0 8px 48px rgba(239, 1, 7, 0.35);
+}
+
+.camp-card--city {
+  border-top: 3px solid #6CABDD;
+  box-shadow: 0 4px 20px rgba(108, 171, 221, 0.15);
+}
+
+.camp-card--city:hover {
+  box-shadow: 0 8px 48px rgba(108, 171, 221, 0.4);
+}
+
+.camp-card--survival {
+  border-top: 3px solid #f5c518;
+  box-shadow: 0 4px 20px rgba(245, 197, 24, 0.1);
+}
+
+.camp-card--survival:hover {
+  box-shadow: 0 8px 48px rgba(245, 197, 24, 0.35);
 }
 
 .camp-crest {
@@ -234,37 +255,9 @@
   .camp-desc { font-size: 0.95rem; }
 }
 
+/* VS separator removed for grid layout */
 .camps-vs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  z-index: 2;
-}
-
-@media (max-width: 800px) {
-  .camps-vs {
-    margin: -12px 0;
-  }
-}
-
-.camps-vs span {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #132257, #ef0107);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.75rem;
-  font-weight: 900;
-  color: #ffffff;
-  letter-spacing: 0.05em;
-  box-shadow: 0 0 15px rgba(239, 1, 7, 0.3);
-}
-
-@media (min-width: 768px) {
-  .camps-vs span { width: 52px; height: 52px; font-size: 0.85rem; }
+  display: none;
 }
 
 /* ---- How it works ----------------------------------------- */
