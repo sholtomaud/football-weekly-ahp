@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite';
 
-export default defineConfig({
-  // Use the repository name for GitHub Pages deployment
-  base: '/football-weekly-ahp/',
+export default defineConfig(({ mode }) => ({
+  // Use sub-directory only for production build on GitHub Pages
+  base: mode === 'production' ? '/football-weekly-ahp/' : '/',
   build: {
     outDir: 'dist',
     emptyOutDir: true,
   },
-});
+}));
