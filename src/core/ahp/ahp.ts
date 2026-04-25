@@ -100,6 +100,10 @@ export class AHPEngine {
     this.sliderValues = new Array(matches.length).fill(0);
   }
 
+  getMatches(): Match[] {
+    return [...this.matches];
+  }
+
   setSliderValue(index: number, value: number): void {
     if (index >= 0 && index < this.sliderValues.length) {
       this.sliderValues[index] = Math.max(-4, Math.min(4, value));

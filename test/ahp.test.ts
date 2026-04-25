@@ -206,9 +206,29 @@ describe('Consistency Ratio', () => {
 });
 
 describe('Matches data', () => {
-  it('REMAINING_MATCHES has 19 entries', async () => {
+  it('REMAINING_MATCHES (total pool) has 19 entries', async () => {
     const { REMAINING_MATCHES } = await import('../src/core/ahp/matches-data.ts');
     assert.equal(REMAINING_MATCHES.length, 19);
+  });
+
+  it('getActiveMatches filters correctly based on date', async () => {
+    const { getActiveMatches } = await import('../src/core/ahp/matches-data.ts');
+    
+    // Total is 19.
+    // 3 games on 2026-04-26
+    // 4 games on 2026-05-03/05
+    // ...etc
+    
+    const all = getActiveMatches('2026-01-01');
+    assert.equal(all.length, 19, 'Should include all games if date is far in past');
+    
+    const none = getActiveMatches('2027-01-01');
+    assert.equal(none.length, 0, 'Should include no games if date is far in future');
+    
+    // First 3 games are on 2026-04-26. 
+    // If today is 2026-04-26, those 3 should be gone immediately.
+    const partial = getActiveMatches('2026-04-26');
+    assert.equal(partial.length, 16, 'Should have removed today\'s games');
   });
 
   it('every match has required fields', async () => {

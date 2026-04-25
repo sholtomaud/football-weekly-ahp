@@ -7,7 +7,7 @@
 
 import { AHPEngine } from './ahp.ts';
 import type { AHPResult } from './ahp.ts';
-import { REMAINING_MATCHES } from './matches-data.ts';
+import { REMAINING_MATCHES, getActiveMatches } from './matches-data.ts';
 import { saveSession } from './history.ts';
 import type { SessionRecord } from './history.ts';
 
@@ -21,7 +21,7 @@ class AHPState {
 
   private constructor() {
     this.engine = new AHPEngine();
-    this.engine.setMatches(REMAINING_MATCHES);
+    this.engine.setMatches(getActiveMatches());
   }
 
   static getInstance(): AHPState {
@@ -32,14 +32,14 @@ class AHPState {
   }
 
   get matches() {
-    return REMAINING_MATCHES;
+    return this.engine.getMatches();
   }
 
   reset(): void {
     this.currentStep = 0;
     this.completed = false;
     this.result = null;
-    this.engine.setMatches(REMAINING_MATCHES);
+    this.engine.setMatches(getActiveMatches());
   }
 
   finalise(): AHPResult {
@@ -58,7 +58,7 @@ class AHPState {
     this.result = record.result;
     
     // Sync the engine so "Retake" uses the correct starting point
-    this.engine.setMatches(REMAINING_MATCHES);
+    this.engine.setMatches(getActiveMatches());
     record.sliderValues.forEach((val, idx) => {
       this.engine.setSliderValue(idx, val);
     });

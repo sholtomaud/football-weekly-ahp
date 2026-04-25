@@ -367,3 +367,16 @@ export const REMAINING_MATCHES: Match[] = [
     spursSurviveContext:   'Leeds win pulls West Ham under if Spurs win.',
   },
 ];
+
+export function getActiveMatches(today?: string): Match[] {
+  // Use provided date or actual current local date in YYYY-MM-DD format
+  let now = today;
+  if (!now) {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    now = `${year}-${month}-${day}`;
+  }
+  return REMAINING_MATCHES.filter(m => m.date > now);
+}
