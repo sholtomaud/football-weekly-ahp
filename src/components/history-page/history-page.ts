@@ -137,6 +137,27 @@ export class HistoryComponent extends BaseComponent {
       empty.setAttribute('hidden', '');
       list.innerHTML  = sessions.map((s, i) => renderSessionCard(s, i)).join('');
       this.attachDeleteListeners();
+      this.attachCardListeners();
+    }
+  }
+
+  private attachCardListeners(): void {
+    this.shadowRoot?.querySelectorAll<HTMLElement>('.session-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const id = card.dataset['sessionId'];
+        if (id) {
+          this.viewSession(id);
+        }
+      });
+    });
+  }
+
+  private viewSession(id: string): void {
+    const sessions = loadSessions();
+    const session = sessions.find((s) => s.id === id);
+    if (session) {
+      ahpState.loadFromSession(session);
+      Router.getInstance().navigate('/results');
     }
   }
 

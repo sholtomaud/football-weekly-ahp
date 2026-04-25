@@ -9,6 +9,7 @@ import { AHPEngine } from './ahp.ts';
 import type { AHPResult } from './ahp.ts';
 import { REMAINING_MATCHES } from './matches-data.ts';
 import { saveSession } from './history.ts';
+import type { SessionRecord } from './history.ts';
 
 class AHPState {
   private static _instance: AHPState;
@@ -47,6 +48,20 @@ class AHPState {
     // Persist to localStorage history
     saveSession(this.engine.getAllSliderValues(), this.result);
     return this.result;
+  }
+
+  /**
+   * Rehydrate state from a past session record.
+   */
+  loadFromSession(record: SessionRecord): void {
+    this.completed = true;
+    this.result = record.result;
+    
+    // Sync the engine so "Retake" uses the correct starting point
+    this.engine.setMatches(REMAINING_MATCHES);
+    record.sliderValues.forEach((val, idx) => {
+      this.engine.setSliderValue(idx, val);
+    });
   }
 }
 
