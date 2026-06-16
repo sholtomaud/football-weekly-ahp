@@ -35,26 +35,35 @@ test.describe('Football Weekly AHP — Analysis Flow', () => {
   test('can complete the full analysis flow', async ({ page }) => {
     await page.goto('/analysis');
 
-    // Work through all 19 match steps
-    for (let i = 0; i < 19; i++) {
-      const analysisPage = page.locator('analysis-page');
-      
+    const analysisPage = page.locator('analysis-page');
+    let isLastStep = false;
+    let stepCount = 0;
+
+    // Work through all match steps dynamically
+    while (!isLastStep && stepCount < 50) {
       // Wait for slider to be interactable
       const slider = analysisPage.locator('#pref-slider');
       await expect(slider).toBeVisible({ timeout: 5000 });
 
       // Set slider to a value (alternate preference)
-      const value = i % 2 === 0 ? '2' : '-2';
+      const value = stepCount % 2 === 0 ? '2' : '-2';
       await slider.evaluate((el, val) => {
         el.value = val;
         el.dispatchEvent(new Event('input'));
       }, value);
 
-      // Click Next / See Results
+      // Check if this is the last step by looking at button text
       const nextBtn = analysisPage.locator('#btn-next');
+      const btnText = await nextBtn.innerText();
+      if (btnText.includes('See My Results')) {
+        isLastStep = true;
+      }
+
+      // Click Next / See Results
       await nextBtn.click();
+      stepCount++;
       
-      // Wait for the next step to slide in (visual stability)
+      // Wait for the next step to slide in or results page to load
       await page.waitForTimeout(200);
     }
 
