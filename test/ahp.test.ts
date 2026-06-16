@@ -223,7 +223,7 @@ describe('Matches data', () => {
     assert.equal(all.length, 19, 'Should include all games if date is far in past');
     
     const none = getActiveMatches('2027-01-01');
-    assert.equal(none.length, 0, 'Should include no games if date is far in future');
+    assert.equal(none.length, 19, 'Should include all games if date is far in future (fallback)');
     
     // First 3 games are on 2026-04-26. 
     // If today is 2026-04-26, those 3 should be gone immediately.

@@ -378,5 +378,8 @@ export function getActiveMatches(today?: string): Match[] {
     const day = String(d.getDate()).padStart(2, '0');
     now = `${year}-${month}-${day}`;
   }
-  return REMAINING_MATCHES.filter(m => m.date > now);
+  const filtered = REMAINING_MATCHES.filter((m) => m.date > now);
+  // Post-season fallback: if all matches are in the past, return all of them
+  // so the app remains functional for demo/test purposes.
+  return filtered.length > 0 ? filtered : REMAINING_MATCHES;
 }
