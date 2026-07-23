@@ -1,0 +1,55 @@
+name: Dependency Patching
+
+on:
+  schedule:
+    - cron: '0 0 * * 1' # Every Monday at 00:00 UTC
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  patch:
+    name: Patch Dependencies
+    runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.58.2-noble
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js v25
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25.x
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update dependencies in package.json
+        run: npx npm-check-updates -u
+
+      - name: Install updated dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Run E2E tests
+        run: npx playwright test
+
+      - name: Build project
+        run: npm run build
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(deps): automated dependency updates"
+            git push origin main
+          else
+            echo "No dependency updates found."
+          fi
